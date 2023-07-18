@@ -24,5 +24,7 @@ jobs:
             docker-compose pull
             docker-compose build
             docker-compose up -d
+            
+            docker image prune --all --force
         env:
           SHOW_OUTPUT: "true"
