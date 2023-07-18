@@ -9,10 +9,16 @@ services:
     depends_on:
       - postgresql
   redis:
-    build:
-      context: ./services/redis
+    image: redis/redis-stack:latest
+    user: root
+    restart: always
     ports:
       - "6379:6379"
+      - "8001:8001"
+    environment:
+      REDIS_ARGS: --requirepass foo
+    volumes:
+      - ./data_redis:/var/lib/redis/data
   postgresql:
     build:
       context: ./services/postgresql
@@ -27,3 +33,4 @@ services:
 
 volumes:
   postgresql-data:
+  data_redis:
