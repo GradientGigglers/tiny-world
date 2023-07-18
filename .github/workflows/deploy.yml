@@ -19,7 +19,7 @@ jobs:
 
           # Command to run on the server
           script: |
-            cd /root/recommender
+            cd /root/tiny-world
             git pull
             docker-compose pull
             docker-compose build
