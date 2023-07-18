@@ -8,6 +8,8 @@ services:
       - "8080:8080"
     depends_on:
       - postgresql
+    networks:
+      - tiny-network
   postgresql:
     build:
       context: ./services/postgresql
@@ -19,6 +21,11 @@ services:
       - "5432:5432"
     volumes:
       - postgresql-data:/var/lib/postgresql/data
+    networks:
+      - tiny-network
 
 volumes:
   postgresql-data:
+
+networks:
+  tiny-network:
