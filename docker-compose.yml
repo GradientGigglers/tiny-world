@@ -8,6 +8,11 @@ services:
       - "8080:8080"
     depends_on:
       - postgresql
+  redis:
+    build:
+      context: ./services/redis
+    ports:
+      - "6379:6379"
   postgresql:
     build:
       context: ./services/postgresql
