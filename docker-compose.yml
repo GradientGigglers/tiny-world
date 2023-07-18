@@ -10,6 +10,11 @@ services:
       - postgresql
     networks:
       - tiny-network
+  redis:
+    build:
+      context: ./services/redis
+    ports:
+      - "6379:6379"
   postgresql:
     build:
       context: ./services/postgresql
