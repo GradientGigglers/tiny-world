@@ -21,6 +21,7 @@ jobs:
           script: |
             cd /root/tiny-world
             git pull
+            export REDIS_UI_PASSWORD=${{ secrets.REDIS_UI_PASSWORD }}
             docker-compose pull
             docker-compose build
             docker-compose up -d
@@ -28,3 +29,5 @@ jobs:
             docker image prune --all --force
         env:
           SHOW_OUTPUT: "true"
+          REDIS_UI_PASSWORD: ${{ secrets.REDIS_UI_PASSWORD }}
+
