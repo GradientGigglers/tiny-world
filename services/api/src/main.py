@@ -17,6 +17,7 @@ def read_root(request: Request):
 @app.post("/evt")
 def read_root(request: Request):
     print(request.headers)
+    print(request.body)
     return {"Thanks": "Bes"}
 
 @app.get("/get-random-number")
