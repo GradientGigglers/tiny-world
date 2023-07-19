@@ -9,15 +9,18 @@ app = FastAPI()
 data = requests.get("http://135.181.118.171:7070/items/0").json()
 
 @app.get("/")
-def read_root(request: Request):
-    print(request.headers)
+def get_item(request: Request):
+    user = request.headers.get('user')
+    session = request.headers.get('session')
+    print('Get /', 'user: ' + str(user), 'session: ' + str(session))
+
     random_number = random.randint(0, len(data))
     return data[random_number]['item_key']
 
 @app.post("/evt")
-def read_root(request: Request):
-    print(request.headers)
-    print(request.body)
+async def post_event(request: Request):
+    data = await request.json()
+    print('Post /evt', data)
     return {"Thanks": "Bes"}
 
 @app.get("/get-random-number")
