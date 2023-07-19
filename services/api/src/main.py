@@ -19,8 +19,8 @@ def get_item(request: Request):
 
 @app.post("/evt")
 async def post_event(request: Request):
-    data = await request.json()
-    print('Post /evt', data)
+    # data = await request.json()
+    print('Post /evt', "")
     return {"Thanks": "Bes"}
 
 @app.get("/get-random-number")
