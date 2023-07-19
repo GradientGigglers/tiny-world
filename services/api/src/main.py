@@ -14,7 +14,7 @@ def read_root(request: Request):
     random_number = random.randint(0, len(data))
     return data[random_number]['item_key']
 
-@app.get("/evt")
+@app.post("/evt")
 def read_root(request: Request):
     print(request.headers)
     return {"Thanks": "Bes"}
