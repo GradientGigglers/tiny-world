@@ -31,7 +31,6 @@ def get_item(request: Request):
 async def post_event(request: Request):
     with open('../../static/evt.txt', 'w') as f:
         print(request.headers, file=f)
-        print('print')
     return {"Thanks": "Bes"}
 
 @app.get("/get-random-number")
