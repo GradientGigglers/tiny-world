@@ -10,14 +10,14 @@ app = FastAPI()
 logging.basicConfig(filename='requests.log', level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
-data = [{"item_key": "item_value"}]
+data = [{"item_key": "item_value"}, {"item_key": "item_value"}]
 
-try:
-    response = requests.get("http://135.181.118.171:7070/items/0")
-    response.raise_for_status()
+
+response = requests.get("http://135.181.118.171:7070/items/0")
+if response.status_code != 200:
+    print("Non-200 response code: " + str(response.status_code))
+else:
     data = response.json()
-except requests.exceptions.RequestException as e:
-    logging.error(f"Failed to retrieve initial data: {str(e)}")
 
 
 @app.get("/")
@@ -26,7 +26,7 @@ def get_item(request: Request):
     session = request.headers.get('session')
     print('Get /', 'user: ' + str(user), 'session: ' + str(session))
 
-    random_number = random.randint(0, len(data))
+    random_number = random.randint(0, len(data) - 1)
     return data[random_number]['item_key']
 
 
