@@ -2,19 +2,8 @@ import requests, logging
 from fastapi import FastAPI, Request, Depends
 from .db import Session, get_db
 from .models import RandomNumber
-import random
 
 app = FastAPI()
-
-data = [{"item_key": "item_value"}, {"item_key": "item_value"}]
-
-
-response = requests.get("http://135.181.118.171:7070/items/0")
-if response.status_code != 200:
-    print("Non-200 response code: " + str(response.status_code))
-else:
-    data = response.json()
-
 
 @app.get("/")
 def get_item(request: Request):
@@ -22,8 +11,7 @@ def get_item(request: Request):
     session = request.headers.get('session')
     print('Get /', 'user: ' + str(user), 'session: ' + str(session))
 
-    random_number = random.randint(0, len(data) - 1)
-    return data[random_number]['item_key']
+    return "f822c60d-6257-4c53-b448-0546d47ae877"
 
 
 @app.post("/evt")
