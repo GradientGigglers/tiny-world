@@ -1,3 +1,4 @@
 FROM bitnami/kafka:latest
 
-COPY server.properties /opt/bitnami/kafka/config/
+COPY kafka.properties /opt/bitnami/kafka/config/
+RUN mv /opt/bitnami/kafka/config/kafka.properties /opt/bitnami/kafka/config/server.properties

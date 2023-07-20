@@ -8,6 +8,8 @@ services:
       - "8080:8080"
     depends_on:
       - postgresql
+      - kafka
+      - redis
     networks:
       - tiny-network
   redis:
@@ -35,14 +37,6 @@ services:
     networks:
       - tiny-network
 
-  zookeeper:
-    image: bitnami/zookeeper:latest
-    ports:
-      - "2181:2181"
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-      - JUTE_MAXBUFFER=2097152
-
   prometheus:
     build:
       context: ./services/prometheus
@@ -54,24 +48,36 @@ services:
     volumes:
       - ./services/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
-  kafka:
-    build:
-      context: ./services/kafka
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
     ports:
-      - "9092:9092"
+      - "2181:2181"
     environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9093:9093"
     depends_on:
       - zookeeper
-
-  kafdrop:
-    image: obsidiandynamics/kafdrop
-    ports:
-      - "9000:9000"
     environment:
-      - KAFKA_BROKERCONNECT=kafka:9092
-      - JVM_OPTS=-Xms32M -Xmx64M
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9093
+      KAFKA_LISTENERS: PLAINTEXT://:9093 # Change this to match the above port
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_SOCKET_REQUEST_MAX_BYTES: 200000000  # Adjust this value as needed
+    volumes:
+      - ./kafka-data:/var/lib/kafka/data
+
+  rest-proxy:
+    image: confluentinc/cp-kafka-rest:latest
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_REST_BOOTSTRAP_SERVERS: kafka:9093
+      KAFKA_REST_HOST_NAME: rest-proxy
 
   grafana:
     image: grafana/grafana:latest
