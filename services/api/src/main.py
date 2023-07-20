@@ -33,7 +33,7 @@ def get_item(request: Request):
 @app.post("/evt")
 async def post_event(request: Request):
     request_body = await request.body()
-
+    print(request_body)
     # Log the request and content
     logging.info(f"POST /evt - Body: {request_body.decode()}")
 
