@@ -10,7 +10,7 @@ app = FastAPI()
 logging.basicConfig(filename='requests.log', level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
-data = []
+data = [{"item_key": "item_value"}]
 
 try:
     response = requests.get("http://135.181.118.171:7070/items/0")
