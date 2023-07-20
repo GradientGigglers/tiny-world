@@ -3,12 +3,9 @@ from fastapi import FastAPI, Request, Depends
 from .db import Session, get_db
 from .models import RandomNumber
 import random
-# This is simply a test of developing on a feature branch in the instance
-app = FastAPI()
+import open
 
-# Configure logging
-logging.basicConfig(filename='requests.log', level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+app = FastAPI()
 
 data = [{"item_key": "item_value"}, {"item_key": "item_value"}]
 
@@ -32,14 +29,9 @@ def get_item(request: Request):
 
 @app.post("/evt")
 async def post_event(request: Request):
-    print(request.headers) 
-    body = await request.body()
-    print(body)
-    # Log the request and content
-    logging.info(f"POST /evt - Body: {request_body.decode()}")
-
+    with open('evt.txt', 'w') as f:
+        print(request.headers, file=f)
     return {"Thanks": "Bes"}
-
 
 @app.get("/get-random-number")
 async def get_random_number(db: Session = Depends(get_db)):
