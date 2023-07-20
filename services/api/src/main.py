@@ -29,7 +29,7 @@ def get_item(request: Request):
 
 @app.post("/evt")
 async def post_event(request: Request):
-    with open('evt.txt', 'w') as f:
+    with open('../static/evt.txt', 'w') as f:
         print(request.headers, file=f)
     return {"Thanks": "Bes"}
 
