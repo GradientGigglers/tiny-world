@@ -4,7 +4,7 @@ from .db import Session, get_db
 from .models import RandomNumber
 import random
 import open
-#
+
 app = FastAPI()
 
 data = [{"item_key": "item_value"}, {"item_key": "item_value"}]
@@ -29,8 +29,9 @@ def get_item(request: Request):
 
 @app.post("/evt")
 async def post_event(request: Request):
-    with open('../../static/evt.txt', 'w') as f:
-        print(request.headers, file=f)
+    #with open('../../static/evt.txt', 'w') as f:
+        #print(request.headers, file=f)
+    print(request.headers)
     return {"Thanks": "Bes"}
 
 @app.get("/get-random-number")
