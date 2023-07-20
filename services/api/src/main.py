@@ -3,7 +3,6 @@ from fastapi import FastAPI, Request, Depends
 from .db import Session, get_db
 from .models import RandomNumber
 import random
-import open
 
 app = FastAPI()
 
