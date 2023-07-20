@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request, Depends
 from .db import Session, get_db
 from .models import RandomNumber
 import random
-
+# This is simply a test of developing on a feature branch in the instance
 app = FastAPI()
 
 # Configure logging
